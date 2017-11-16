@@ -17,10 +17,11 @@ class DocxReaderSpec extends FlatSpec {
   }
 
   "findRegex" should "find whether a document contains a string that matches the given regular expression" in {
-    assert(DocxReader.findRegex(document, "^Hello World!$"))
-    assert(DocxReader.findRegex(document, "^Hello \\w+!$"))
+    assert(DocxReader.findRegex(document, "^Hello World!"))
+    assert(DocxReader.findRegex(document, "^Hello \\w+!"))
     assert(DocxReader.findRegex(document, "Lorem .+, consectetur"))
-    // assert(!DocxReader.findRegex(document, "Lorem \\w+[,]{1} dolor"))
-    // assert(!DocxReader.findRegex(document, "Lorem .+, adipiscing"))
+    assert(!DocxReader.findRegex(document, "Lorem \\w+, dolor"))
+    assert(!DocxReader.findRegex(document, "Lorem .+, adipiscing"))
+    assert(DocxReader.findRegex(document, "ligula\\.$"))
   }
 }

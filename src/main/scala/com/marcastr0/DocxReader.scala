@@ -17,6 +17,9 @@ object DocxReader {
     val extractor = new XWPFWordExtractor(document)
     val text = extractor.getText
     val mtch = pattern.findFirstIn(text)
-    mtch.getOrElse(false) match {case _ => true}
+    mtch.getOrElse(false) match {
+      case false => false
+      case _ => true
+    }
   }
 }
