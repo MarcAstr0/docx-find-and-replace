@@ -1,20 +1,32 @@
 package com.marcastr0
 
-import java.io.{FileInputStream, InputStream}
+import java.io.{File, FileInputStream, InputStream}
 
 import org.apache.poi.xwpf.usermodel.XWPFDocument
 
 object DocxFindAndReplace {
+
+  val usage =
+    """
+      |Usage: [--regex] pattern filename
+    """.stripMargin
+
   def main(args: Array[String]): Unit = {
     if (args.length == 0) {
-      println("Must receive a Word file as input.")
-    } else {
-      val docxFile = args(0)
-      val string = args(1)
-      val fileStream: InputStream = new FileInputStream(docxFile)
-      val document = new XWPFDocument(fileStream)
-
-      println(DocxReader.findString(document, string))
+      println(usage)
+      sys.exit(1)
     }
+
+    args.toList.head match {
+      case "--regex" =>
+        val fileStream: InputStream = new FileInputStream(args(2))
+        val document = new XWPFDocument(fileStream)
+        println(DocxReader.findRegex(document, args(1)))
+      case _ =>
+        val fileStream: InputStream = new FileInputStream(args(1))
+        val document = new XWPFDocument(fileStream)
+        println(DocxReader.findString(document, args(0)))
+    }
+
   }
 }
