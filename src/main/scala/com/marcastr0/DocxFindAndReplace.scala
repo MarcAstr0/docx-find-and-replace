@@ -10,11 +10,11 @@ object DocxFindAndReplace {
       println("Must receive a Word file as input.")
     } else {
       val docxFile = args(0)
+      val string = args(1)
       val fileStream: InputStream = new FileInputStream(docxFile)
       val document = new XWPFDocument(fileStream)
 
-      val text = document.getDocument
-      println(text)
+      println(DocxReader.findString(document, string))
     }
   }
 }
